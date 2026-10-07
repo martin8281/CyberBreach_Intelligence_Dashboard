@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "v_accounts_year",
+  "position": {
+    "x": 960,
+    "y": 225,
+    "z": 100,
+    "height": 400,
+    "width": 920,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "BreachYear"
+              }
+            },
+            "queryRef": "BreachYear"
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Total Accounts Compromised"
+              }
+            },
+            "queryRef": "Total Accounts Compromised"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Accounts Compromised by Year'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

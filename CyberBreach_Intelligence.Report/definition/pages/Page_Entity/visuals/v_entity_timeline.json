@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "v_entity_timeline",
+  "position": {
+    "x": 40,
+    "y": 530,
+    "z": 30,
+    "height": 510,
+    "width": 1840,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "BreachDate"
+              }
+            },
+            "queryRef": "BreachDate"
+          }
+        ],
+        "Y": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Total Accounts Compromised"
+              }
+            },
+            "queryRef": "Total Accounts Compromised"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Breach Incident Sequence & Accounts Compromised Timeline'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

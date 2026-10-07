@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "kpi_2",
+  "position": {
+    "x": 270,
+    "y": 105,
+    "z": 20,
+    "height": 100,
+    "width": 210,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Total Accounts Compromised"
+              }
+            },
+            "queryRef": "Total Accounts Compromised"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Accounts Compromised'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

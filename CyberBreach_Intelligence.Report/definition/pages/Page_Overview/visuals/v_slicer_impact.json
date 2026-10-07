@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "v_slicer_impact",
+  "position": {
+    "x": 1430,
+    "y": 645,
+    "z": 130,
+    "height": 400,
+    "width": 450,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "ImpactLevel"
+              }
+            },
+            "queryRef": "ImpactLevel"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Filter by Severity Tier'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

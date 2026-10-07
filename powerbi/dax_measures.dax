@@ -1,0 +1,204 @@
+﻿/* ==========================================================================
+   CYBERBREACH INTEL - DAX MEASURES LIBRARY FOR POWER BI
+   Author: Cybersecurity Analytics & Data Engineering Team
+   Target Model: CleanedBreachData & BreachDataClasses
+   ========================================================================== */
+
+// --------------------------------------------------------------------------
+// 1. CORE INCIDENT & ACCOUNT MEASURES
+// --------------------------------------------------------------------------
+
+// Total number of recorded breach incidents
+Total Breaches = 
+COUNTROWS('CleanedBreachData')
+
+// Total user accounts compromised across all incidents in current filter context
+Total Accounts Compromised = 
+SUM('CleanedBreachData'[PwnCount])
+
+// Mean number of accounts compromised per breach
+Average Breach Size = 
+AVERAGE('CleanedBreachData'[PwnCount])
+
+// Median breach size (less sensitive to mega-breach outliers)
+Median Breach Size = 
+MEDIAN('CleanedBreachData'[PwnCount])
+
+// Largest single breach incident by accounts compromised
+Largest Single Breach = 
+MAX('CleanedBreachData'[PwnCount])
+
+// Smallest single breach incident
+Smallest Single Breach = 
+MIN('CleanedBreachData'[PwnCount])
+
+// Population standard deviation of affected accounts
+StdDev Breach Size = 
+STDEV.P('CleanedBreachData'[PwnCount])
+
+
+// --------------------------------------------------------------------------
+// 2. SECURITY CLASSIFICATION MEASURES
+// --------------------------------------------------------------------------
+
+// Count of officially verified breaches
+Verified Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsVerified] = TRUE()
+)
+
+// Count of unverified breach incidents
+Unverified Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsVerified] = FALSE()
+)
+
+// Percentage of breaches verified
+% Verified Breaches = 
+DIVIDE([Verified Breaches], [Total Breaches], 0)
+
+// Count of breaches flagged as sensitive (high personal privacy risk)
+Sensitive Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsSensitive] = TRUE()
+)
+
+// Percentage of breaches flagged as sensitive
+% Sensitive Breaches = 
+DIVIDE([Sensitive Breaches], [Total Breaches], 0)
+
+// Count of malware stealer / botnet credential exfiltration dumps
+Malware-Associated Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsMalware] = TRUE()
+)
+
+// Count of marketing spam lists & web scraper dumps
+Spam List Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsSpamList] = TRUE()
+)
+
+// Count of fabricated or discredited breach claims
+Fabricated Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsFabricated] = TRUE()
+)
+
+// Count of retired breach records
+Retired Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsRetired] = TRUE()
+)
+
+// Count of subscription-free service alerts
+Subscription Free Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[IsSubscriptionFree] = TRUE()
+)
+
+
+// --------------------------------------------------------------------------
+// 3. ANALYTICAL IMPACT LEVEL SEVERITY TIERS
+// --------------------------------------------------------------------------
+
+// Critical tier breaches (>= 10,000,000 accounts)
+Critical Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[ImpactLevel] = "Critical"
+)
+
+// High tier breaches (1,000,000 to 9,999,999 accounts)
+High Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[ImpactLevel] = "High"
+)
+
+// Medium tier breaches (100,000 to 999,999 accounts)
+Medium Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[ImpactLevel] = "Medium"
+)
+
+// Low tier breaches (< 100,000 accounts)
+Low Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[ImpactLevel] = "Low"
+)
+
+// Combined Critical & High impact breaches (>= 1,000,000 accounts)
+Critical & High Breaches = 
+CALCULATE(
+    COUNTROWS('CleanedBreachData'),
+    'CleanedBreachData'[ImpactLevel] IN {"Critical", "High"}
+)
+
+// Percentage of breaches in Critical or High severity tiers
+% Critical & High Breaches = 
+DIVIDE([Critical & High Breaches], [Total Breaches], 0)
+
+
+// --------------------------------------------------------------------------
+// 4. INTELLIGENCE & DISCLOSURE LATENCY MEASURES
+// --------------------------------------------------------------------------
+
+// Average days elapsed between breach occurrence and database addition
+Average Intelligence Latency (Days) = 
+AVERAGE('CleanedBreachData'[DaysToDatabaseAddition])
+
+// Median days elapsed between breach occurrence and database addition
+Median Intelligence Latency (Days) = 
+MEDIAN('CleanedBreachData'[DaysToDatabaseAddition])
+
+// Maximum latency observed in current selection
+Max Intelligence Latency (Days) = 
+MAX('CleanedBreachData'[DaysToDatabaseAddition])
+
+
+// --------------------------------------------------------------------------
+// 5. DATACLASSES THREAT ASSET MEASURES
+// --------------------------------------------------------------------------
+
+// Total distinct compromised information types in current filter
+Distinct Data Classes Compromised = 
+DISTINCTCOUNT('BreachDataClasses'[DataClass])
+
+// Average number of data classes exposed per incident
+Average Data Classes Per Incident = 
+AVERAGE('CleanedBreachData'[DataClassCount])
+
+
+// --------------------------------------------------------------------------
+// 6. CONDITIONAL FORMATTING & DYNAMIC COLOR ENCODING
+// --------------------------------------------------------------------------
+
+// Dynamic HEX color code for ImpactLevel conditional formatting
+Impact Color Code = 
+SWITCH(
+    SELECTEDVALUE('CleanedBreachData'[ImpactLevel]),
+    "Critical", "#DC2626", // Red
+    "High",     "#EA580C", // Orange
+    "Medium",   "#D97706", // Amber
+    "Low",      "#16A34A", // Green
+    "#6D28D9"              // Default Violet
+)
+
+// Dynamic HEX color code for Verification conditional formatting
+Verification Color Code = 
+IF(
+    SELECTEDVALUE('CleanedBreachData'[IsVerified]) = TRUE(),
+    "#0D9488", // Teal
+    "#64748B"  // Slate Muted
+)

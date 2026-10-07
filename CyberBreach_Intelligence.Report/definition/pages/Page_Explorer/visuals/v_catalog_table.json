@@ -1,0 +1,147 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "v_catalog_table",
+  "position": {
+    "x": 40,
+    "y": 110,
+    "z": 10,
+    "height": 930,
+    "width": 1840,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Name"
+              }
+            },
+            "queryRef": "Name"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Title"
+              }
+            },
+            "queryRef": "Title"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "Domain"
+              }
+            },
+            "queryRef": "Domain"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "BreachDate"
+              }
+            },
+            "queryRef": "BreachDate"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "PwnCount"
+              }
+            },
+            "queryRef": "PwnCount"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "ImpactLevel"
+              }
+            },
+            "queryRef": "ImpactLevel"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "VerificationStatus"
+              }
+            },
+            "queryRef": "VerificationStatus"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CleanedBreachData"
+                  }
+                },
+                "Property": "SensitivityStatus"
+              }
+            },
+            "queryRef": "SensitivityStatus"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Comprehensive Cybersecurity Breach Catalog'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

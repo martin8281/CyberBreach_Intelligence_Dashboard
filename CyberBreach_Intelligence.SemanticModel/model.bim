@@ -1,0 +1,364 @@
+{
+  "name": "CyberBreachIntelligenceModel",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "tables": [
+      {
+        "name": "CleanedBreachData",
+        "columns": [
+          {
+            "name": "Name",
+            "dataType": "string",
+            "isKey": true
+          },
+          {
+            "name": "Title",
+            "dataType": "string"
+          },
+          {
+            "name": "Domain",
+            "dataType": "string"
+          },
+          {
+            "name": "BreachDate",
+            "dataType": "dateTime",
+            "formatString": "yyyy-MM-dd"
+          },
+          {
+            "name": "AddedDate",
+            "dataType": "dateTime"
+          },
+          {
+            "name": "ModifiedDate",
+            "dataType": "dateTime"
+          },
+          {
+            "name": "PwnCount",
+            "dataType": "int64",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Description",
+            "dataType": "string"
+          },
+          {
+            "name": "LogoPath",
+            "dataType": "string"
+          },
+          {
+            "name": "DataClasses",
+            "dataType": "string"
+          },
+          {
+            "name": "IsVerified",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsFabricated",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsSensitive",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsRetired",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsSpamList",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsMalware",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsSubscriptionFree",
+            "dataType": "boolean"
+          },
+          {
+            "name": "BreachYear",
+            "dataType": "int64"
+          },
+          {
+            "name": "BreachMonth",
+            "dataType": "int64"
+          },
+          {
+            "name": "BreachMonthName",
+            "dataType": "string"
+          },
+          {
+            "name": "BreachQuarter",
+            "dataType": "int64"
+          },
+          {
+            "name": "BreachDay",
+            "dataType": "int64"
+          },
+          {
+            "name": "BreachDayOfWeek",
+            "dataType": "string"
+          },
+          {
+            "name": "DaysToDatabaseAddition",
+            "dataType": "int64"
+          },
+          {
+            "name": "DaysSinceModification",
+            "dataType": "double"
+          },
+          {
+            "name": "BreachAgeYears",
+            "dataType": "int64"
+          },
+          {
+            "name": "AffectedAccountsLog",
+            "dataType": "double"
+          },
+          {
+            "name": "ImpactLevel",
+            "dataType": "string"
+          },
+          {
+            "name": "VerificationStatus",
+            "dataType": "string"
+          },
+          {
+            "name": "SensitivityStatus",
+            "dataType": "string"
+          },
+          {
+            "name": "MalwareStatus",
+            "dataType": "string"
+          },
+          {
+            "name": "DataClassCount",
+            "dataType": "int64"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CleanedBreachData-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Admin/CHRIST/S3/DAS/DAS Mini project/data/cleaned_breach_data.csv\"),[Delimiter=\",\", Columns=32, Encoding=65001, QuoteStyle=QuoteStyle.Rfc1208]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{",
+                "        {\"Name\", type text}, {\"Title\", type text}, {\"Domain\", type text},",
+                "        {\"BreachDate\", type date}, {\"AddedDate\", type datetimezone}, {\"ModifiedDate\", type datetimezone},",
+                "        {\"PwnCount\", Int64.Type}, {\"Description\", type text}, {\"LogoPath\", type text},",
+                "        {\"DataClasses\", type text}, {\"IsVerified\", type logical}, {\"IsFabricated\", type logical},",
+                "        {\"IsSensitive\", type logical}, {\"IsRetired\", type logical}, {\"IsSpamList\", type logical},",
+                "        {\"IsMalware\", type logical}, {\"IsSubscriptionFree\", type logical},",
+                "        {\"BreachYear\", Int64.Type}, {\"BreachMonth\", Int64.Type}, {\"BreachMonthName\", type text},",
+                "        {\"BreachQuarter\", Int64.Type}, {\"BreachDay\", Int64.Type}, {\"BreachDayOfWeek\", type text},",
+                "        {\"DaysToDatabaseAddition\", Int64.Type}, {\"DaysSinceModification\", type number},",
+                "        {\"BreachAgeYears\", Int64.Type}, {\"AffectedAccountsLog\", type number},",
+                "        {\"ImpactLevel\", type text}, {\"VerificationStatus\", type text},",
+                "        {\"SensitivityStatus\", type text}, {\"MalwareStatus\", type text},",
+                "        {\"DataClassCount\", Int64.Type}",
+                "    })",
+                "in",
+                "    #\"Changed Type\" "
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Breaches",
+            "expression": "COUNTROWS('CleanedBreachData')",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Total Accounts Compromised",
+            "expression": "SUM('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Average Breach Size",
+            "expression": "AVERAGE('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Median Breach Size",
+            "expression": "MEDIAN('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Largest Single Breach",
+            "expression": "MAX('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Smallest Single Breach",
+            "expression": "MIN('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "StdDev Breach Size",
+            "expression": "STDEV.P('CleanedBreachData'[PwnCount])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Verified Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsVerified] = TRUE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Unverified Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsVerified] = FALSE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Sensitive Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsSensitive] = TRUE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Malware-Associated Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsMalware] = TRUE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Spam List Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsSpamList] = TRUE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Fabricated Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[IsFabricated] = TRUE())",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Critical Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[ImpactLevel] = \"Critical\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "High Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[ImpactLevel] = \"High\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Medium Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[ImpactLevel] = \"Medium\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Low Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[ImpactLevel] = \"Low\")",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Critical & High Breaches",
+            "expression": "CALCULATE(COUNTROWS('CleanedBreachData'), 'CleanedBreachData'[ImpactLevel] IN {\"Critical\", \"High\"})",
+            "formatString": "#,0"
+          },
+          {
+            "name": "% Verified Breaches",
+            "expression": "DIVIDE([Verified Breaches], [Total Breaches], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "% Sensitive Breaches",
+            "expression": "DIVIDE([Sensitive Breaches], [Total Breaches], 0)",
+            "formatString": "0.0%"
+          },
+          {
+            "name": "Mean Intelligence Latency Days",
+            "expression": "AVERAGE('CleanedBreachData'[DaysToDatabaseAddition])",
+            "formatString": "0.0"
+          },
+          {
+            "name": "Median Intelligence Latency Days",
+            "expression": "MEDIAN('CleanedBreachData'[DaysToDatabaseAddition])",
+            "formatString": "0"
+          },
+          {
+            "name": "Distinct Data Classes Compromised",
+            "expression": "DISTINCTCOUNT('BreachDataClasses'[DataClass])",
+            "formatString": "#,0"
+          }
+        ]
+      },
+      {
+        "name": "BreachDataClasses",
+        "columns": [
+          {
+            "name": "BreachName",
+            "dataType": "string"
+          },
+          {
+            "name": "Title",
+            "dataType": "string"
+          },
+          {
+            "name": "DataClass",
+            "dataType": "string"
+          },
+          {
+            "name": "PwnCount",
+            "dataType": "int64"
+          },
+          {
+            "name": "BreachYear",
+            "dataType": "int64"
+          },
+          {
+            "name": "ImpactLevel",
+            "dataType": "string"
+          },
+          {
+            "name": "IsVerified",
+            "dataType": "boolean"
+          },
+          {
+            "name": "IsSensitive",
+            "dataType": "boolean"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "BreachDataClasses-Partition",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(\"C:/Users/Admin/CHRIST/S3/DAS/DAS Mini project/data/breach_data_classes.csv\"),[Delimiter=\",\", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Rfc1208]),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{",
+                "        {\"BreachName\", type text}, {\"Title\", type text}, {\"DataClass\", type text},",
+                "        {\"PwnCount\", Int64.Type}, {\"BreachYear\", Int64.Type}, {\"ImpactLevel\", type text},",
+                "        {\"IsVerified\", type logical}, {\"IsSensitive\", type logical}",
+                "    })",
+                "in",
+                "    #\"Changed Type\" "
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "Rel_Breaches_DataClasses",
+        "fromTable": "BreachDataClasses",
+        "fromColumn": "BreachName",
+        "toTable": "CleanedBreachData",
+        "toColumn": "Name"
+      }
+    ]
+  }
+}

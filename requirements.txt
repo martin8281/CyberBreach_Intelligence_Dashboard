@@ -1,0 +1,17 @@
+﻿# Core Data Science & Analysis
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualization & Plotting
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# Interactive Dashboard Framework
+dash>=2.10.0
+dash-bootstrap-components>=1.4.0
+
+# Server & HTTP
+Flask>=2.2.0
+Werkzeug>=2.2.0
+requests>=2.28.0

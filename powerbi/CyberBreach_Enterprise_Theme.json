@@ -1,0 +1,70 @@
+﻿{
+  "name": "CyberBreach Enterprise Theme",
+  "dataColors": [
+    "#6D28D9",
+    "#1D4ED8",
+    "#0D9488",
+    "#DC2626",
+    "#EA580C",
+    "#D97706",
+    "#16A34A",
+    "#BE185D",
+    "#7C3AED",
+    "#2563EB",
+    "#059669",
+    "#475569"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#0F172A",
+  "tableAccent": "#6D28D9",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#F8FAFC"
+              }
+            }
+          }
+        ],
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            },
+            "radius": 6
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F8FAFC"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}
