@@ -245,4 +245,5 @@ DAS Mini project/
   - Add password hashing algorithm vulnerability profiling (MD5, SHA1 vs bcrypt, Argon2).
   - Train machine learning classification models to forecast breach impact severity based on early incident attributes.
 #   C y b e r B r e a c h _ I n t e l l i g e n c e _ D a s h b o a r d  
+ #   C y b e r B r e a c h _ I n t e l l i g e n c e _ D a s h b o a r d  
  
